@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import CardPersonaje from "../components/CardPersonaje";
 
 
 const StarWars = () => {
@@ -8,37 +9,37 @@ const StarWars = () => {
     const { store, dispatch } = useGlobalReducer();
 
 
-    const obtenerPersonajes = () => {
+    const obtenerPersonajes = async () => {
 
-        fetch("https://www.swapi.tech/api/people")
-        .then(res => res.json())
-        .then(data =>{
+        try {
+            const response = await fetch("https://www.swapi.tech/api/people");
+            const data = await response.json();
+        
 
-            let resultapi = {
-                    personajes:[
-                    {
-                        id:0,
-                        name:''
-                    }
-                ]
-            }
-            
-            data.results.map((x)=>{
-                resultapi.personajes.push({
-                    id: x.uid,
-                    name:x.name
-                });
-            })
+        
 
+            const personajes = await Promise.all(
+                data.results.map(async (personaje) => {
+                  const res = await fetch(personaje.url);
+                  const info = await res.json();
+          
+                  return {
+                    id: personaje.uid,
+                    name: personaje.name,
+                    skin_color: info.result.properties.skin_color,
+                    hair_color: info.result.properties.hair_color,
+                    height: info.result.properties.height
+                  };
+                })
+            )
+        
             dispatch({
-                type: 'get_personajes',
-                payload: resultapi
+              type: 'get_personajes',
+              payload: { personajes }
             });
-
-            console.log(store);
-
-        })
-        .catch(err => console.error(err))
+          } catch (error) {
+            console.error("Error al obtener personajes:", error);
+          }
 
     }
 
@@ -77,23 +78,9 @@ const StarWars = () => {
             <div className="d-flex flex-nowrap overflow-auto">
 
                 {
-                    store.personajes.map((item)=>{
-                        <div className="card mx-2" style={{ minWidth: '300px' }}>
-                            <img src="https://th.bing.com/th/id/OIP.drExegRbmVpPq_44ztMElAHaFj?w=212&h=180&c=7&r=0&o=5&pid=1.7" className="card-img-top" alt="..." />
-                            <div className="card-body">
-                                <div className="row">
-                                    <div className="col">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                            
-                                    <button className="btn btn-warning" style={{float: "right"}}><i className="fa-solid fa-heart"></i></button>
-                            
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    })
+                    store.personajes.map((item)=>(
+                       <CardPersonaje  element={item} key={item.id}/>
+                    ))
                 }
                 
 
