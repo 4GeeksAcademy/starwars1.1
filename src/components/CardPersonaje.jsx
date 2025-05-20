@@ -5,7 +5,7 @@ const CardPersonaje = (props) => {
 
 
     useEffect(()=>{
-    
+        console.log(props);
     },[])
 
     return (
@@ -17,17 +17,19 @@ const CardPersonaje = (props) => {
                     <h5 className="card-title">{props.element.name}</h5>
                     
                         <ul>
-                            <li>Altura: {props.element.height}</li>
-                            <li>Color Cabello: {props.element.hair_color}</li>
-                            <li>Color piel: {props.element.skin_color}</li>
+                            <li>Gender: {props.element.gender}</li>
+                            <li>Hair Color: {props.element.hair_color}</li>
+                            <li>Eye Color: {props.element.eye_color}</li>
                         </ul>
                    
                     <Link to={'/detallepersonaje/' + props.element.id}>
-                        <button className="btn btn-primary">Go somewhere</button>
+                        <button className="btn btn-primary">Learn More!</button>
                     </Link>
                    
             
-                    <button className="btn btn-warning" style={{float: "right"}}><i className="fa-solid fa-heart"></i></button>
+                    <button className="btn btn-warning" style={{float: "right"}} onClick={()=>props.addFavoritos(props.element.id,props.element.name,'personaje')}>
+                        <i className="fa-solid fa-heart"></i>
+                    </button>
             
                     </div>
                 </div>

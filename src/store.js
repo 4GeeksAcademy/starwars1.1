@@ -1,25 +1,28 @@
 export const initialStore=()=>{
   return{
-    personajes:[
-      {
-        id:0,
-        name:''
-      }
+    favoritos:[
     ]
   }
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
+  switch (action.type) {
     case 'get_personajes':
-
-      const listaPersonajes = action.payload
-
+      const listaPersonajes = action.payload;
       return {
         ...store,
         personajes: listaPersonajes.personajes
       };
+
+    case 'add_favorito':
+      // Verificamos si el favorito ya existe
+      const existe = store.favoritos.some(fav => fav.id === action.payload.id);
+      return {
+        ...store,
+        favoritos: existe ? store.favoritos : [...store.favoritos, action.payload]
+      };
+
     default:
-      throw Error('Unknown action.');
-  }    
+      throw new Error('Unknown action.');
+  }
 }
