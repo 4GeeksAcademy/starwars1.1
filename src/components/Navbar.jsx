@@ -5,11 +5,21 @@ export const Navbar = () => {
 
 	const { store, dispatch } = useGlobalReducer();
 
+
+    const eliminaFavorito = (elem) => {
+        dispatch({ type: 'remove_favorito', payload: { id: elem.id } });
+
+    }
+
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <img className="navbar-brand" href="#" src="https://th.bing.com/th/id/OIP.8nicOZjrXoCcLIy_v4CiRAAAAA?w=315&h=133&c=7&r=0&o=5&pid=1.7"  width={100}/>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <Link to={'/starwars'}>
+					<img className="navbar-brand" href="#" src="https://th.bing.com/th/id/OIP.8nicOZjrXoCcLIy_v4CiRAAAAA?w=315&h=133&c=7&r=0&o=5&pid=1.7"  width={100}/>
+				</Link>
+					
+                
+				<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
@@ -21,7 +31,7 @@ export const Navbar = () => {
                         {
 							store.favoritos.map((element,index)=>{
 								return(
-                        				<li key={index}><a className="dropdown-item" href="#">{element.name}</a></li>
+                        				<li onClick={()=>eliminaFavorito(element)} key={index}><a className="dropdown-item" href="#">{element.name} <i className="fa-solid fa-trash"></i></a></li>
 								)
 							})
 						}

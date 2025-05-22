@@ -5,7 +5,6 @@ const CardPersonaje = (props) => {
 
 
     useEffect(()=>{
-        console.log(props);
     },[])
 
     return (
@@ -27,8 +26,15 @@ const CardPersonaje = (props) => {
                     </Link>
                    
             
-                    <button className="btn btn-warning" style={{float: "right"}} onClick={()=>props.addFavoritos(props.element.id,props.element.name,'personaje')}>
-                        <i className="fa-solid fa-heart"></i>
+                    <button className="btn botonFavorito" style={{float: "right"}} onClick={()=>props.addFavoritos(props.element.id,props.element.name,'personaje')}>
+                        
+                        
+                        {
+                            props.store.favoritos.find(x=>x.id == props.element.id)?.id != undefined
+                            ? <i className="fa-solid fa-heart favorite" ></i>
+                            : <i className="fa-solid fa-heart noFavorite"></i>
+                        }
+
                     </button>
             
                     </div>

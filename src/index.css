@@ -7,3 +7,20 @@
     color: red;
     font-size: 30px;
 }
+
+.favorite {
+    color: yellow;
+}
+
+.noFavorite{
+    color: #ccc;
+}
+
+
+.botonFavorito{
+    border: 1px yellow solid;
+}
+
+.botonFavorito:hover{
+    border: 1px yellow solid;
+}

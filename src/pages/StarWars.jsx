@@ -8,6 +8,8 @@ const StarWars = () => {
     
     const { store, dispatch } = useGlobalReducer();
     const [personajes,setPersonajes] = useState([]);
+    const [vehiculos,setVehiculos] = useState([]);
+    const [planetas,setPlanetas] = useState([]);
 
 
     const obtenerPersonajes = async () => {
@@ -15,8 +17,6 @@ const StarWars = () => {
         try {
             const response = await fetch("https://www.swapi.tech/api/people");
             const data = await response.json();
-        
-
         
 
             const personajesResp = await Promise.all(
@@ -53,6 +53,43 @@ const StarWars = () => {
 
     }
 
+    const obtenerVehiculos = async () => {
+
+      try {
+          const response = await fetch("https://www.swapi.tech/api/vehicles");
+          const data = await response.json();
+  
+          console.log(data);
+
+          const vehiculosResp = await Promise.all(
+              data.results.map(async (vehiculo) => {
+                const res = await fetch(vehiculo.url);
+                const info = await res.json();
+                console.log('info');
+                console.log(info);
+                return {
+                  id: info.uid,
+                  name: info.properties.name,
+                  cargo_capacity: info.properties.cargo_capacity,
+                  vehicle_class: info.properties.vehicle_class
+                };
+              })
+          )
+      
+
+
+/*
+          setPersonajes(personajesResp);
+
+
+          */
+          
+        } catch (error) {
+          console.error("Error al obtener personajes:", error);
+        }
+
+  }
+
     const addFavoritos = (id,name,tipo) => {
         
         const favorito = {
@@ -68,7 +105,9 @@ const StarWars = () => {
     }
 
     useEffect(()=>{
-        obtenerPersonajes()
+        obtenerPersonajes();
+        //obtenerVehiculos();
+        
     },[])
 
     return (
@@ -83,7 +122,7 @@ const StarWars = () => {
                 {
                     
                     personajes.map((item)=>(
-                       <CardPersonaje  element={item} key={item.id} addFavoritos={addFavoritos}/>
+                       <CardPersonaje  element={item} key={item.id} addFavoritos={addFavoritos} store={store}/>
                     ))
                     
                 }
