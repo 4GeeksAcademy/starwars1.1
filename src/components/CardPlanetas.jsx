@@ -20,7 +20,7 @@ const CardPlanetas= (props) => {
                             <li>Gravity: {props.element.gravity}</li>
                         </ul>
                    
-                    <Link to={'/detallepersonaje/' + props.element.id}>
+                    <Link to={'/detalleplaneta/' + props.element.id}>
                         <button className="btn btn-primary">Learn More!</button>
                     </Link>
                    
