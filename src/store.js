@@ -16,7 +16,7 @@ export default function storeReducer(store, action = {}) {
 
     case 'add_favorito':
       // Verificamos si el favorito ya existe
-      const existe = store.favoritos.some(fav => fav.id === action.payload.id);
+      const existe = store.favoritos.some(fav => fav.id === action.payload.id && fav.tipo === action.payload.tipo);
       return {
         ...store,
         favoritos: existe ? store.favoritos : [...store.favoritos, action.payload]

@@ -25,11 +25,11 @@ const CardPlanetas= (props) => {
                     </Link>
                    
             
-                    <button className="btn botonFavorito" style={{float: "right"}} onClick={()=>props.addFavoritos(props.element.id,props.element.name,'personaje')}>
+                    <button className="btn botonFavorito" style={{float: "right"}} onClick={()=>props.addFavoritos(props.element.id,props.element.name,'planeta')}>
                         
                         
                         {
-                            props.store.favoritos.find(x=>x.id == props.element.id)?.id != undefined
+                            props.store.favoritos.find(x=>x.id == props.element.id && x.tipo == 'planeta')?.id != undefined
                             ? <i className="fa-solid fa-heart favorite" ></i>
                             : <i className="fa-solid fa-heart noFavorite"></i>
                         }

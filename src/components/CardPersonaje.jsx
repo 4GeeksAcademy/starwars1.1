@@ -30,7 +30,7 @@ const CardPersonaje = (props) => {
                         
                         
                         {
-                            props.store.favoritos.find(x=>x.id == props.element.id)?.id != undefined
+                            props.store.favoritos.find(x=>x.id == props.element.id && x.tipo == 'personaje')?.id != undefined
                             ? <i className="fa-solid fa-heart favorite" ></i>
                             : <i className="fa-solid fa-heart noFavorite"></i>
                         }
