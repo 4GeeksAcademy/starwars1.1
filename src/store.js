@@ -22,10 +22,10 @@ export default function storeReducer(store, action = {}) {
         favoritos: existe ? store.favoritos : [...store.favoritos, action.payload]
       };
 
-      case 'remove_favorito':
+      case 'remove_favorito':      
       return {
         ...store,
-        favoritos: store.favoritos.filter(fav => fav.id !== action.payload.id)
+        favoritos: store.favoritos.filter(fav => fav.name !== action.payload.name)
       };
 
     default:

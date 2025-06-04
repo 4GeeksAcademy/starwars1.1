@@ -7,7 +7,7 @@ export const Navbar = () => {
 
 
     const eliminaFavorito = (elem) => {
-        dispatch({ type: 'remove_favorito', payload: { id: elem.id } });
+        dispatch({ type: 'remove_favorito', payload:elem });
 
     }
 
